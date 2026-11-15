@@ -9,7 +9,7 @@ static inline type __in##bwl(uint16_t port) { \
     asm volatile("in" #bw " %1, %0" : "=a"(value) : "Nd"(port)); \
     return value; \
 } \
-static inline void __out##bwl(uint16_t port, type value) { \
+static inline void __out##bwl(type value, uint16_t port) { \
     asm volatile("out" #bw " %0, %1" : : "a"(value), "Nd"(port)); \
 }
 
