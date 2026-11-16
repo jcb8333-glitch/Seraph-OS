@@ -13,16 +13,16 @@
 
 /* Basic types */
 typedef void VOID;
-typedef uintptr_t UINTN;
-typedef uint8_t UINT8;
-typedef uint16_t UINT16;
-typedef uint32_t UINT32;
-typedef uint64_t UINT64;
-typedef uint8_t BOOLEAN;
-typedef uint16_t CHAR16;
-typedef uint64_t EFI_PHYSICAL_ADDRESS;
-typedef uint64_t EFI_VIRTUAL_ADDRESS;
-typedef uint64_t EFI_STATUS;
+typedef uintptr_t   UINTN;
+typedef uint8_t     UINT8;
+typedef uint16_t    UINT16;
+typedef uint32_t    UINT32;
+typedef uint64_t    UINT64;
+typedef uint8_t     BOOLEAN;
+typedef uint16_t    CHAR16;
+typedef uint64_t    EFI_PHYSICAL_ADDRESS;
+typedef uint64_t    EFI_VIRTUAL_ADDRESS;
+typedef uint64_t    EFI_STATUS;
 typedef void* EFI_HANDLE;
 
 
@@ -45,10 +45,10 @@ typedef void* EFI_HANDLE;
 
 /* GUID */
 typedef struct {
-    UINT32 data1;
-    UINT16 data2;
-    UINT16 data3;
-    UINT8 data4[8];
+    UINT32  data1;
+    UINT16  data2;
+    UINT16  data3;
+    UINT8   data4[8];
 } EFI_GUID;
 
 #define EFI_ACPI_20_TABLE_GUID \
@@ -75,16 +75,16 @@ typedef EFI_STATUS (EFIAPI* EFI_TEXT_CLEAR_SCREEN)(
 );
 
 typedef struct {
-    EFI_TEXT_RESET reset;
-    EFI_TEXT_STRING outStr;
-    VOID* testStr;
-    VOID* queryMode;
-    VOID* setMode;
-    VOID* setAttribute;
-    EFI_TEXT_CLEAR_SCREEN clearScreen;
-    VOID* setCursorPos;
-    VOID* enableCursor;
-    VOID* mode;  
+    EFI_TEXT_RESET          reset;
+    EFI_TEXT_STRING         outStr;
+    VOID*                   testStr;
+    VOID*                   queryMode;
+    VOID*                   setMode;
+    VOID*                   setAttribute;
+    EFI_TEXT_CLEAR_SCREEN   clearScreen;
+    VOID*                   setCursorPos;
+    VOID*                   enableCursor;
+    VOID*                   mode;  
 } EFI_TEXT_OUT_PROTO;
 
 /* e820 memory codes (May not use) */
@@ -115,12 +115,12 @@ typedef enum {
 } EFI_ALLOCATE_TYPE;
 
 typedef struct {
-    UINT32               type;
-    UINT32               pad;
+    UINT32                  type;
+    UINT32                  pad;
     EFI_PHYSICAL_ADDRESS    physicalStart;
     EFI_VIRTUAL_ADDRESS     virtualStart;
-    UINT64                numPages;
-    UINT64              attribute;
+    UINT64                  numPages;
+    UINT64                  attribute;
 } EFI_MEMORY_DESCRIPTOR;
 
 /* Boot Services */
