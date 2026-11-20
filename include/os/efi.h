@@ -9,8 +9,6 @@
 #define EFIAPI
 #endif
 
-#define EFI_ERR
-
 /* Basic types */
 typedef void VOID;
 typedef uintptr_t   UINTN;
@@ -25,23 +23,24 @@ typedef uint64_t    EFI_VIRTUAL_ADDRESS;
 typedef uint64_t    EFI_STATUS;
 typedef void* EFI_HANDLE;
 
+#define EFI_ERR_BIT ((UINTN)1 << 63)
 
 /* Status codes */
 #define EFI_SUCCESS 0
-#define EFI_LOAD_ERROR          (1 | EFI_ERR)
-#define EFI_DEVICE_ERROR        (2 | EFI_ERR)
-#define EFI_INVALID_PARAMETER   (3 | EFI_ERR)
-#define EFI_UNSUPPORTED         (4 | EFI_ERR)
-#define EFI_BAD_BUFFER_SIZE     (5 | EFI_ERR)
-#define EFI_BUFFER_TOO_SMALL    (6 | EFI_ERR)
-#define EFI_NOT_READY           (7 | EFI_ERR)
-#define EFI_NOT_FOUND           (8 | EFI_ERR)
-#define EFI_OUT_OF_RESOURCES    (9 | EFI_ERR)
-#define EFI_ACCESS_DENIED       (10 | EFI_ERR)
-#define EFI_TIMEOUT             (11 | EFI_ERR)
-#define EFI_ABORTED             (12 | EFI_ERR)
-#define EFI_SECURITY_VIOLATION  (13 | EFI_ERR)
-#define EFI_SECURITY_VIOLATION  (14 | EFI_ERR)
+#define EFI_LOAD_ERROR          (1 | EFI_ERR_BIT)
+#define EFI_DEVICE_ERROR        (2 | EFI_ERR_BIT)
+#define EFI_INVALID_PARAMETER   (3 | EFI_ERR_BIT)
+#define EFI_UNSUPPORTED         (4 | EFI_ERR_BIT)
+#define EFI_BAD_BUFFER_SIZE     (5 | EFI_ERR_BIT)
+#define EFI_BUFFER_TOO_SMALL    (6 | EFI_ERR_BIT)
+#define EFI_NOT_READY           (7 | EFI_ERR_BIT)
+#define EFI_NOT_FOUND           (8 | EFI_ERR_BIT)
+#define EFI_OUT_OF_RESOURCES    (9 | EFI_ERR_BIT)
+#define EFI_ACCESS_DENIED       (10 | EFI_ERR_BIT)
+#define EFI_TIMEOUT             (11 | EFI_ERR_BIT)
+#define EFI_ABORTED             (12 | EFI_ERR_BIT)
+#define EFI_SECURITY_VIOLATION  (13 | EFI_ERR_BIT)
+#define EFI_SECURITY_VIOLATION  (14 | EFI_ERR_BIT)
 
 /* GUID */
 typedef struct {
@@ -125,31 +124,48 @@ typedef struct {
 
 /* Boot Services */
 typedef EFI_STATUS (EFIAPI* EFI_ALLOCATE_PAGES)(
-    EFI_ALLOCATE_TYPE type, EFI_MEMORY_TYPE memoryType, EFI_PHYSICAL_ADDRESS* memory
+    EFI_ALLOCATE_TYPE type, 
+    EFI_MEMORY_TYPE memoryType, 
+    EFI_PHYSICAL_ADDRESS* memory
 );
 typedef EFI_STATUS (EFIAPI* EFI_FREE_PAGES)(
-    EFI_PHYSICAL_ADDRESS memory, UINTN pages
+    EFI_PHYSICAL_ADDRESS memory, 
+    UINTN pages
 );
 typedef EFI_STATUS (EFIAPI* EFI_GET_MEMORY_MAP)(
-    UINTN* memMapSize, EFI_MEMORY_DESCRIPTOR* memMap, UINTN* mapKey, UINTN* descSize, UINT32 descVer
+    UINTN* memMapSize, 
+    EFI_MEMORY_DESCRIPTOR* memMap, 
+    UINTN* mapKey, 
+    UINTN* descSize, 
+    UINT32 descVer
 );
 typedef EFI_STATUS (EFIAPI* EFI_ALLOCATE_POOL)(
-    EFI_MEMORY_TYPE poolType, UINTN size, VOID** buffer
+    EFI_MEMORY_TYPE poolType, 
+    UINTN size, 
+    VOID** buffer
 );
 typedef EFI_STATUS (EFIAPI* EFI_FREE_POOL)(
     VOID* buffer
 );
 typedef EFI_STATUS(EFIAPI* EFI_EXIT_BOOT_SERVICES)(
-    EFI_HANDLE imageHandle, UINTN mapKey
+    EFI_HANDLE imageHandle, 
+    UINTN mapKey
 );
 typedef EFI_STATUS(EFIAPI* EFI_SET_WATCHDOG_TIMER)(
-    UINTN timeout, UINT64 watchdogCode, UINTN dataSize, CHAR16* watchdogData
+    UINTN timeout, 
+    UINT64 watchdogCode, 
+    UINTN dataSize, 
+    CHAR16* watchdogData
 );
 typedef EFI_STATUS (EFIAPI* EFI_LOCATE_PROTOCOL)(
-    EFI_GUID* protocol, VOID* registration, VOID** interface
+    EFI_GUID* protocol, 
+    VOID* registration, 
+    VOID** interface
 );
 typedef EFI_STATUS (EFIAPI* EFI_HANDLE_PROTOCOL)(
-    EFI_HANDLE handle, EFI_GUID* protocol, VOID** interface
+    EFI_HANDLE handle, 
+    EFI_GUID* protocol, 
+    VOID** interface
 );
 
 typedef struct {
@@ -233,7 +249,8 @@ typedef struct {
 
 /* Entry point signature */
 typedef EFI_STATUS (EFIAPI* EFI_IMAGE_ENTRY_POINT)(
-    EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE* systemTable
+    EFI_HANDLE imageHandle, 
+    EFI_SYSTEM_TABLE* systemTable
 );
 
 #endif // _EFI_H
