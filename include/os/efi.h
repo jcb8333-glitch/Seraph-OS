@@ -105,8 +105,8 @@ typedef enum {
     efiMemoryMappedIOPortSpace,
     efiPalCode,
     efiPersistentMemory,
-    efiMaxMemory,
-    efiUnacceptedMemoryType
+    efiUnacceptedMemoryType,
+    efiMaxMemory
 } EFI_MEMORY_TYPE;
 
 typedef enum {
