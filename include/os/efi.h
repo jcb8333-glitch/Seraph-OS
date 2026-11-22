@@ -28,19 +28,19 @@ typedef void* EFI_HANDLE;
 /* Status codes */
 #define EFI_SUCCESS 0
 #define EFI_LOAD_ERROR          (1 | EFI_ERR_BIT)
-#define EFI_DEVICE_ERROR        (2 | EFI_ERR_BIT)
-#define EFI_INVALID_PARAMETER   (3 | EFI_ERR_BIT)
-#define EFI_UNSUPPORTED         (4 | EFI_ERR_BIT)
-#define EFI_BAD_BUFFER_SIZE     (5 | EFI_ERR_BIT)
-#define EFI_BUFFER_TOO_SMALL    (6 | EFI_ERR_BIT)
-#define EFI_NOT_READY           (7 | EFI_ERR_BIT)
-#define EFI_NOT_FOUND           (8 | EFI_ERR_BIT)
+#define EFI_INVALID_PARAMETER   (2 | EFI_ERR_BIT)
+#define EFI_UNSUPPORTED         (3 | EFI_ERR_BIT)
+#define EFI_BAD_BUFFER_SIZE     (4 | EFI_ERR_BIT)
+#define EFI_BUFFER_TOO_SMALL    (5 | EFI_ERR_BIT)
+#define EFI_NOT_READY           (6 | EFI_ERR_BIT)
+#define EFI_DEVICE_ERROR        (7 | EFI_ERR_BIT)
+#define EFI_WRITE_PROTECTED     (8 | EFI_ERR_BIT)
 #define EFI_OUT_OF_RESOURCES    (9 | EFI_ERR_BIT)
-#define EFI_ACCESS_DENIED       (10 | EFI_ERR_BIT)
-#define EFI_TIMEOUT             (11 | EFI_ERR_BIT)
-#define EFI_ABORTED             (12 | EFI_ERR_BIT)
-#define EFI_SECURITY_VIOLATION  (13 | EFI_ERR_BIT)
-#define EFI_SECURITY_VIOLATION  (14 | EFI_ERR_BIT)
+#define EFI_NOT_FOUND           (14 | EFI_ERR_BIT)
+#define EFI_ACCESS_DENIED       (15 | EFI_ERR_BIT)
+#define EFI_SECURITY_VIOLATION  (16 | EFI_ERR_BIT)
+#define EFI_TIMEOUT             (18 | EFI_ERR_BIT)
+#define EFI_ABORTED             (21 | EFI_ERR_BIT)
 
 /* GUID */
 typedef struct {
@@ -62,12 +62,14 @@ typedef struct {
 } EFI_TABLE_HEADER;
 
 /* Simple Text Output */
-typedef struct EFI_TEXT_OUT_PROTO;
+struct EFI_TEXT_OUT_PROTO;
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_RESET)(
-    EFI_TEXT_OUT_PROTO* This, BOOLEAN extendedVerification
+    struct EFI_TEXT_OUT_PROTO* This, 
+    BOOLEAN extendedVerification
 );
 typedef EFI_STATUS (EFIAPI*  EFI_TEXT_STRING)(
-    EFI_TEXT_OUT_PROTO* This, CHAR16* String
+    EFI_TEXT_OUT_PROTO* This, 
+    CHAR16* String
 );
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_CLEAR_SCREEN)(
     EFI_TEXT_OUT_PROTO* This
