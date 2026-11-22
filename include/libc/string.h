@@ -2,6 +2,7 @@
 #define _STRING_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 /* memory cases */
 void* memcpy(void* dst, const void* src, size_t len);
