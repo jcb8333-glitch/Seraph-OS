@@ -45,4 +45,13 @@ void* memmove(void* dst, const void* src, size_t len){
             *--tmp = *--s;
         }
     }
+    return dst;
+}
+
+void* memset(void* dst, int data, size_t len){
+    char* xs = dst;
+    while(len--){
+        *xs++ = data;
+    }
+    return dst;
 }
