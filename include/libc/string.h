@@ -4,6 +4,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define get_unaligned(ptr) __get_unaligned_t(typeof(*(ptr)), (ptr))
+#define __get_unaligned_t(type, ptr) ({         \
+    const struct { type x; } __packed *__pptr = \
+        (typeof(__pptr))(ptr);                  \
+    __pptr->x;                                  \
+})
+
 /* memory cases */
 void* memcpy(void* dst, const void* src, size_t len);
 void* memmove(void* dst, const void* src, size_t len);
