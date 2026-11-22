@@ -27,3 +27,22 @@ void* memcpy(void* dst, const void* src, size_t len){
     return dst;
 }
 
+void* memmove(void* dst, const void* src, size_t len){
+    char* tmp;
+    const char* s;
+    if (dst <= src){
+        tmp = dst;
+        s = src;
+        while (len--){
+            *tmp++ = *s++;
+        }
+    } else {
+        tmp = dst;
+        tmp += len;
+        s = src;
+        s += len;
+        while (len--){
+            *--tmp = *--s;
+        }
+    }
+}
