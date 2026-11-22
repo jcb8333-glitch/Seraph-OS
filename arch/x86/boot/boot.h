@@ -7,30 +7,42 @@
 
 #define STACK_SIZE 1024
 
-#include <stdlib.h>
+#include <stddef.h>
 #include <os/efi.h>
 
 typedef struct {
+    UINT64 next;
+    UINT64 prev;
+} BOOT_LIST;
+
+struct boot_param_block {
     UINT32 magic;
     UINT32 version;
     UINT32 size;
-} boot_info_header;
+    UINT32 _reserved0;
+    UINT64 flags;
 
-struct boot_param_block {
-    boot_info_header hdr;
-    // Kernel
-    UINT32 loader_signature;
-    UINT32 pkernel_addr;
-    UINT32 kernerl_size;
-    // Memory
-    UINT32 memdesc_size;
-    UINT32 memdesc_v;
-    UINT32 memmap;
-    UINT32 memmap_size;
+    BOOT_LIST memory_list;
+    BOOT_LIST module_list;
+    UINT64 setup_data;
+    UINT64 kernel_phys_addr;
+    UINT64 kernel_vert_addr;
 
-    void* rsdp;
-    // runtime sevices
-    char* cmdline;
+    UINT64 kernel_entry;
+    UINT64 kernel_size;
+    UINT64 pm14_phys;
+    UINT64 stack_base;
+    UINT64 stack_size;
+    UINT64 cmdline;
+    UINT32 cmdline_len;
+    UINT32 _reserved1;
+    UINT64 rsdp;
+    UINT32 acpi_revision;
+    UINT32 _reserved2;
+    UINT64 efi_sys_table;
+    UINT64 efi_runtime_services;
+    UINT64 loader_base;
+    UINT64 loader_size;
 }__attribute__((packed));
 
 // memory.c
