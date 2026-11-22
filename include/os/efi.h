@@ -62,15 +62,15 @@ typedef struct {
 } EFI_TABLE_HEADER;
 
 /* Simple Text Output */
-struct EFI_TEXT_OUT_PROTO;
+typedef struct EFI_TEXT_OUT_PROTO;
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_RESET)(
-    struct EFI_TEXT_OUT_PROTO* This, BOOLEAN extendedVerification
+    EFI_TEXT_OUT_PROTO* This, BOOLEAN extendedVerification
 );
 typedef EFI_STATUS (EFIAPI*  EFI_TEXT_STRING)(
-    struct EFI_TEXT_OUT_PROTO* This, CHAR16* String
+    EFI_TEXT_OUT_PROTO* This, CHAR16* String
 );
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_CLEAR_SCREEN)(
-    struct EFI_TEXT_OUT_PROTO* This
+    EFI_TEXT_OUT_PROTO* This
 );
 
 typedef struct {
@@ -94,7 +94,7 @@ typedef enum {
     efiBootServicesCode,
     efiBootServicesData,
     efiRuntimeServicesCode,
-    efiRuntimeServicesDate,
+    efiRuntimeServicesData,
     efiConventionalMemory,
     efiUnusableMemory,
     efiACPIReclaimMemory,
@@ -104,10 +104,11 @@ typedef enum {
     efiPalCode,
     efiPersistentMemory,
     efiMaxMemory,
+    efiUnacceptedMemoryType
 } EFI_MEMORY_TYPE;
 
 typedef enum {
-    allocateAnyPAges,
+    allocateAnyPages,
     allocateMaxAddress,
     allocateAddress,
     maxAllocateType
@@ -125,7 +126,8 @@ typedef struct {
 /* Boot Services */
 typedef EFI_STATUS (EFIAPI* EFI_ALLOCATE_PAGES)(
     EFI_ALLOCATE_TYPE type, 
-    EFI_MEMORY_TYPE memoryType, 
+    EFI_MEMORY_TYPE memoryType,
+    UINTN pages,
     EFI_PHYSICAL_ADDRESS* memory
 );
 typedef EFI_STATUS (EFIAPI* EFI_FREE_PAGES)(
@@ -137,7 +139,7 @@ typedef EFI_STATUS (EFIAPI* EFI_GET_MEMORY_MAP)(
     EFI_MEMORY_DESCRIPTOR* memMap, 
     UINTN* mapKey, 
     UINTN* descSize, 
-    UINT32 descVer
+    UINT32* descVer
 );
 typedef EFI_STATUS (EFIAPI* EFI_ALLOCATE_POOL)(
     EFI_MEMORY_TYPE poolType, 
