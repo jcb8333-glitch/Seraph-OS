@@ -6,6 +6,9 @@
 #define _BOOT_H
 
 #define STACK_SIZE 1024
+#define BOOT_PARAMS_MAGIC 0x48505253u
+#define BOOT_PARAMS_VERSION 1u
+#define BOOT_FLAG_ID_MAPPED (1ULL << 0)
 
 #include <stddef.h>
 #include <os/efi.h>
@@ -15,12 +18,16 @@ typedef struct {
     UINT64 prev;
 } BOOT_LIST;
 
-struct boot_param_block {
+typedef struct {
     UINT32 magic;
     UINT32 version;
     UINT32 size;
     UINT32 _reserved0;
     UINT64 flags;
+} BOOT_HEADER;
+
+struct boot_param_block {
+    BOOT_HEADER hdr;
 
     BOOT_LIST memory_list;
     BOOT_LIST module_list;
