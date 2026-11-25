@@ -13,6 +13,9 @@
 #include <stddef.h>
 #include <os/efi.h>
 
+EFI_SYSTEM_TABLE* sST;
+EFI_BOOT_SERVICES* sBS;
+
 typedef struct {
     UINT64 next;
     UINT64 prev;

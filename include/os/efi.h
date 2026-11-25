@@ -62,17 +62,17 @@ typedef struct {
 } EFI_TABLE_HEADER;
 
 /* Simple Text Output */
-struct EFI_TEXT_OUT_PROTO;
+struct EFI_TEXT_OUTPUT_PROTOCOL;
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_RESET)(
-    struct EFI_TEXT_OUT_PROTO* This, 
+    struct EFI_TEXT_OUPUT_PROTOCOL* This, 
     BOOLEAN extendedVerification
 );
 typedef EFI_STATUS (EFIAPI*  EFI_TEXT_STRING)(
-    EFI_TEXT_OUT_PROTO* This, 
+    struct EFI_TEXT_OUPUT_PROTOCOL* This, 
     CHAR16* String
 );
 typedef EFI_STATUS (EFIAPI* EFI_TEXT_CLEAR_SCREEN)(
-    EFI_TEXT_OUT_PROTO* This
+    struct EFI_TEXT_OUPUT_PROTOCOL* This
 );
 
 typedef struct {
@@ -180,7 +180,7 @@ typedef struct {
     // Memory
     EFI_ALLOCATE_PAGES AllocatePages;
     EFI_FREE_PAGES FreePages;
-    EFI_GET_MEMORY_MAP getMemoryMap;
+    EFI_GET_MEMORY_MAP GetMemoryMap;
     EFI_ALLOCATE_POOL AllocatePool;
     EFI_FREE_POOL FreePool;
     // Events
