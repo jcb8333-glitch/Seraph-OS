@@ -21,6 +21,18 @@ typedef struct {
     UINT64 prev;
 } BootList;
 
+static void list_init(BootList* head){
+    head->next = head->prev = (UINT64)(uintptr_t)head;
+}
+
+static void list_append(BootList* head, BootList* node){
+    BootList* tail = (BootList*)(uintptr_t)head->prev;
+    node->next = (UINT64)(uintptr_t)head;
+    node->prev = (UINT64)(uintptr_t)tail;
+    tail->next = (UINT64)(uintptr_t)node;
+    head->prev = (UINT64)(uintptr_t)node;
+}
+
 /*
  * This struct is how the data from the memory map is stored in the kernel.
  * BootList is used to form a doubly linked list where the nodes are a block

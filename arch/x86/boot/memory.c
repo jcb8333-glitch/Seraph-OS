@@ -15,24 +15,12 @@ static UINTN EfiDescriptorSize;
 static UINT32 EfiDescriptorV;
 UINTN EfiMapKey;
 
-static void mem_list_init(BootList* head){
-    head->next = head->prev = (UINT64)(uintptr_t)head;
-}
-
-static void mem_list_append(BootList* head, BootList* node){
-    BootList* tail = (BootList*)(uintptr_t)head->prev;
-    node->next = (UINT64)(uintptr_t)head;
-    node->prev = (UINT64)(uintptr_t)tail;
-    tail->next = (UINT64)(uintptr_t)node;
-    head->prev = (UINT64)(uintptr_t)node;
-}
-
 EFI_STATUS detect_memory(struct boot_param_block* params){
     BootMemoryDesc* blocks = NULL;
     UINTN raw_cap, block_cap, count;
 
     if (params == NULL) return EFI_INVALID_PARAMETER;
-    mem_list_init(&params->memory_list);
+    list_init(&params->memory_list);
 
     memory_map = NULL;
     EfiMemoryMapSize = 0;
@@ -66,7 +54,7 @@ EFI_STATUS detect_memory(struct boot_param_block* params){
         b->base_page = d->physicalStart / PAGE_SIZE;
         b->page_count = d->numPages;
         b->attr = d->attribute;
-        mem_list_append(&params->memory_list, &b->link);
+        list_append(&params->memory_list, &b->link);
     }
 
     return EFI_SUCCESS;
