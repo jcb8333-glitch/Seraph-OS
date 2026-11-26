@@ -42,6 +42,8 @@ typedef void* EFI_HANDLE;
 #define EFI_TIMEOUT             (18 | EFI_ERR_BIT)
 #define EFI_ABORTED             (21 | EFI_ERR_BIT)
 
+#define EFI_ERROR(s) (((EFI_STATUS)(s)) & EFI_ERR_BIT)
+
 /* GUID */
 typedef struct {
     UINT32  data1;
