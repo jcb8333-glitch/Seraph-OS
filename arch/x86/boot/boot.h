@@ -19,21 +19,49 @@ EFI_BOOT_SERVICES* sBS;
 typedef struct {
     UINT64 next;
     UINT64 prev;
-} BOOT_LIST;
+} BootList;
+
+/*
+ * This struct is how the data from the memory map is stored in the kernel.
+ * BootList is used to form a doubly linked list where the nodes are a block
+ * of memory. A memory block's previous and next blocks point to physical
+ * addresses.
+ */
+typedef struct {
+    BootList link;
+    UINT32 type;
+    UINT32 _pad;
+    UINT64 base_page;
+    UINT64 page_count;
+    UINT64 attr;
+} BootMemoryDesc;
 
 typedef struct {
     UINT32 magic;
-    UINT32 version;
+    UINT32 majorVersion;
+    UINT32 minorVersion;
     UINT32 size;
     UINT32 _reserved0;
     UINT64 flags;
-} BOOT_HEADER;
+} BootHeader;
 
+typedef struct {
+    UINT64 rsdp;
+    UINT32 acpi_revision;
+    UINT64 efi_sys_table;
+    UINT64 efi_runtime_services;
+} FirmwareData;
+
+/*
+ * Data in this struct is filled during boot services
+ * and used to prepare for control to be passed to the
+ * kernel.
+ */
 struct boot_param_block {
-    BOOT_HEADER hdr;
+    BootHeader hdr;
 
-    BOOT_LIST memory_list;
-    BOOT_LIST module_list;
+    BootList memory_list;
+    BootList module_list;
     UINT64 setup_data;
     UINT64 kernel_phys_addr;
     UINT64 kernel_vert_addr;
@@ -46,16 +74,12 @@ struct boot_param_block {
     UINT64 cmdline;
     UINT32 cmdline_len;
     UINT32 _reserved1;
-    UINT64 rsdp;
-    UINT32 acpi_revision;
-    UINT32 _reserved2;
-    UINT64 efi_sys_table;
-    UINT64 efi_runtime_services;
+    FirmwareData firmwInfo;
     UINT64 loader_base;
     UINT64 loader_size;
 }__attribute__((packed));
 
 // memory.c
-// void detectMemory(void);
+void get_mem_map(struct boot_param_block params);
 
 #endif // _BOOT_H
