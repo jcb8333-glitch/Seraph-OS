@@ -15,15 +15,11 @@ static UINTN EfiDescriptorSize;
 static UINT32 EfiDescriptorV;
 UINTN EfiMapKey;
 
-EFI_STATUS detect_memory(struct boot_param_block* params){
-    BootMemoryDesc* blocks = NULL;
-    UINTN raw_cap, block_cap, count;
-
-    if (params == NULL) return EFI_INVALID_PARAMETER;
-    list_init(&params->memory_list);
-
+EFI_STATUS get_mem_map(void){
+    EFI_STATUS status;
     memory_map = NULL;
     EfiMemoryMapSize = 0;
+
     status = sBS->GetMemoryMap(
         &EfiMemoryMapSize,
         memory_map,
@@ -34,6 +30,15 @@ EFI_STATUS detect_memory(struct boot_param_block* params){
     if (status == EFI_BUFFER_TOO_SMALL || EfiDescriptorSize == 0)
         return EFI_LOAD_ERROR;
     if (status != EFI_SUCCESS) return status;
+    return EFI_SUCCESS;
+}
+
+EFI_STATUS build_mem_list(struct boot_param_block* params){
+    BootMemoryDesc* blocks = NULL;
+    UINTN raw_cap, block_cap, count;
+
+    if (params == NULL) return EFI_INVALID_PARAMETER;
+    list_init(&params->memory_list);
 
     raw_cap = EfiMemoryMapSize + EfiDescriptorSize * MMAP_SLACK;
     block_cap = raw_cap / EfiDescriptorSize;

@@ -92,6 +92,8 @@ struct boot_param_block {
 }__attribute__((packed));
 
 // memory.c
-void get_mem_map(struct boot_param_block params);
+extern UINTN EfiMapKey;
+EFI_STATUS get_mem_map(void);
+EFI_STATUS build_mem_list(struct boot_param_block* params);
 
 #endif // _BOOT_H
