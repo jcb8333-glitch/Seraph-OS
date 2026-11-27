@@ -28,7 +28,7 @@ EFI_STATUS get_mem_map(void){
         &EfiDescriptorV
     );
     if (status == EFI_BUFFER_TOO_SMALL || EfiDescriptorSize == 0)
-        return EFI_LOAD_ERROR;
+        return EFI_BUFFER_TOO_SMALL;
     if (status != EFI_SUCCESS) return status;
     return EFI_SUCCESS;
 }
@@ -39,6 +39,9 @@ EFI_STATUS build_mem_list(struct boot_param_block* params){
 
     if (params == NULL) return EFI_INVALID_PARAMETER;
     list_init(&params->memory_list);
+
+    status = get_mem_map();
+    if(EFI_ERROR(status)) return status;
 
     raw_cap = EfiMemoryMapSize + EfiDescriptorSize * MMAP_SLACK;
     block_cap = raw_cap / EfiDescriptorSize;
